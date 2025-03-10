@@ -26,8 +26,19 @@ DE_ENV=$(whiptail --title "Prism Installer" --menu "Choose a Desktop Environment
     "gnome" "GNOME Desktop" \
     "kde" "KDE Plasma" \
     "xfce" "XFCE Desktop" 3>&1 1>&2 2>&3)
+    
+# Check if the user pressed "Cancel"
+if [ $? -ne 0 ]; then
+    echo "Installation cancelled."
+    exit 1
+fi
 
-REMOVE_SNAPS=$(whiptail --title "Prism Installer" --yesno "Do you want to remove Snaps?" 10 50; echo $?)
+whiptail --title "Prism Installer" --yesno "Do you want to remove Snaps?" 10 50
+REMOVE_SNAPS=$?
+
+# Debugging Output
+echo "Selected Desktop: $DE_ENV"
+echo "Remove Snaps? (0=Yes, 1=No): $REMOVE_SNAPS"
 
 # Start the install
 echo "💎Installing Minimal Ubuntu System..."
