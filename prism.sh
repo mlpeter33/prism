@@ -59,10 +59,11 @@ sysfs /sys sysfs defaults 0 0
 tmpfs /tmp tmpfs defaults 0 0
 EOF
 
-# Mount necessary filesystems
+# Mount necessary filesystems 
 sudo mount --bind /dev $TARGET_DIR/dev
-sudo mount --bind /sys $TARGET_DIR/sys
+sudo mount --bind /dev/pts $TARGET_DIR/dev/pts
 sudo mount --bind /proc $TARGET_DIR/proc
+sudo mount --bind /sys $TARGET_DIR/sys
 
 # Install packages inside chroot
 echo "Installing essential packages..."
@@ -96,16 +97,18 @@ fi
 # Set hostname and basic network config
 echo "127.0.0.1 prism" | sudo tee -a $TARGET_DIR/etc/hosts
 
-# Setting up GRUB bootloader (correct order & mounts)
+# Setting up GRUB bootloader (pleasework)
 echo "Setting up GRUB bootloader..."
-sudo chroot $TARGET_DIR grub-install --target=i386-pc --recheck /dev/sda
-sudo chroot $TARGET_DIR update-grub
+sudo chroot "$TARGET_DIR" apt install -y grub-pc grub-common
+sudo chroot "$TARGET_DIR" grub-install --target=i386-pc --recheck /dev/sda
+sudo chroot "$TARGET_DIR" update-grub
 
 # Add default user
 sudo chroot $TARGET_DIR useradd -m -G sudo -s /bin/bash prism
 sudo chroot $TARGET_DIR passwd prism
 
-# Cleanup
+# Cleanup 
+sudo umount $TARGET_DIR/dev/pts
 sudo umount $TARGET_DIR/dev
 sudo umount $TARGET_DIR/sys
 sudo umount $TARGET_DIR/proc
