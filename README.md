@@ -1,12 +1,13 @@
-# Prism - The Minimalist Ubuntu Installer
-Prism is a lightweight, customizable Ubuntu installer that lets you build an OS setup tailored to your needs
+# Prism - The Distro Installer
+Prism aims to be an easy installer built in rust for Linux distros without attaching to a specific one
+(First compatible distro will be Ubuntu) 
 
 ---
 
 # Features
 ## Roadmap
 
-- [ ] Install minimal Ubuntu system
+- [ ] Install Ubuntu system
 - [ ] TUI installer
 - [ ] Desktop environment selection
 - [ ] Remove default packages to reduce system footprint
