@@ -69,6 +69,8 @@ sudo chroot $TARGET_DIR apt update
 sudo chroot $TARGET_DIR apt install -y $BASE_PACKAGES
 
 # Enable Universe repository (required for some DE packages)
+sudo chroot "$TARGET_DIR" apt update
+sudo chroot "$TARGET_DIR" apt install -y software-properties-common
 sudo chroot "$TARGET_DIR" add-apt-repository universe
 sudo chroot "$TARGET_DIR" apt update
 
