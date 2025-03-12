@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Prism - Minimalist Ubuntu Installer
+# Prism - This script is meant to be used as a base for creating a distro installer
+# for now it only installs ubuntu with some options tho
 # Install only what you need 
 
 set -euo pipefail
@@ -69,23 +70,21 @@ sudo chroot $TARGET_DIR apt update
 sudo chroot $TARGET_DIR apt install -y $BASE_PACKAGES
 
 # Enable Universe repository (required for some DE packages)
-sudo chroot "$TARGET_DIR" apt update
 sudo chroot "$TARGET_DIR" apt install -y software-properties-common
 sudo chroot "$TARGET_DIR" add-apt-repository universe
 sudo chroot "$TARGET_DIR" apt update
 
 # Desktop Environment Installation
 if [[ $DE_ENV != "none" ]]; then
-  echo "No desktop environment selected. Skipping..."
   if [[ $DE_ENV == "xfce" ]]; then
     sudo chroot $TARGET_DIR apt install -y xubuntu-desktop
-  fi
-  if [[ $DE_ENV == "gnome" ]]; then
+  elif [[ $DE_ENV == "gnome" ]]; then
     sudo chroot $TARGET_DIR apt install -y ubuntu-desktop
-  fi
-  if [[ $DE_ENV == "kde" ]]; then
+  elif [[ $DE_ENV == "kde" ]]; then
     sudo chroot $TARGET_DIR apt install -y kde-plasma-desktop
   fi
+else
+  echo "No desktop environment selected. Skipping..."
 fi
 
 # Remove snaps if selected :)))
@@ -97,6 +96,7 @@ fi
 # Set hostname and basic network config
 echo "127.0.0.1 prism" | sudo tee -a $TARGET_DIR/etc/hosts
 
+# Setting up GRUB bootloader (correct order & mounts)
 echo "Setting up GRUB bootloader..."
 sudo chroot $TARGET_DIR grub-install --target=i386-pc --recheck /dev/sda
 sudo chroot $TARGET_DIR update-grub
@@ -114,4 +114,3 @@ echo "Prism installation complete!"
 echo "Reboot into your minimalist Ubuntu: sudo reboot"
 
 exit 0
-
