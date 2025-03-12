@@ -78,7 +78,7 @@ if [[ $DE_ENV != "none" ]]; then
     sudo chroot $TARGET_DIR apt install -y ubuntu-desktop
   fi
   if [[ $DE_ENV == "kde" ]]; then
-    sudo chroot $TARGET_DIR apt install -y kde-plasma-desktop
+    sudo chroot $TARGET_DIR apt install -y plasma-desktop
   fi
 fi
 
