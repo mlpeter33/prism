@@ -68,6 +68,10 @@ echo "Installing essential packages..."
 sudo chroot $TARGET_DIR apt update
 sudo chroot $TARGET_DIR apt install -y $BASE_PACKAGES
 
+# Enable Universe repository (required for some DE packages)
+sudo chroot "$TARGET_DIR" add-apt-repository universe
+sudo chroot "$TARGET_DIR" apt update
+
 # Desktop Environment Installation
 if [[ $DE_ENV != "none" ]]; then
   echo "No desktop environment selected. Skipping..."
