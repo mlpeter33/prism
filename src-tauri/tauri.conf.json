@@ -13,10 +13,12 @@
     "windows": [
       {
         "title": "Prism",
-        "width": 1200,
-        "height": 1000,
         "fullscreen": false,
-        "resizable": true
+        "resizable": true,
+        "maximized": true,
+        "center": true,
+        "transparent": true,
+        "decorations": true
       }
     ],
     "security": {

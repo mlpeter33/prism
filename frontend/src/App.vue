@@ -1,19 +1,29 @@
 <script setup>
+import background from './components/background.vue';
 import { ref } from 'vue';
 
 const message = ref('Welcome to Prism! 🚀');
 </script>
+
 <template>
-    <div class="container bg-white min-h-full min-w-full">
-      <h1 class=" text-black">{{ message }}</h1>
+    <div id="app">
+       <background><p class="absolute text-white text-4xl">{{ message }}</p></background>
     </div>
-  </template>
+</template>
+  
   <style>
-  html, body, #app {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    }
+body {
+  position: relative;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#app {
+  position: absolute;
+  overflow: hidden;
+  min-width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
   </style>
